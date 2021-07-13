@@ -31,6 +31,7 @@ func main() {
 
     scanner := bufio.NewScanner(file)
     totalPaper := 0
+    totalRibbon := 0
     for scanner.Scan() {
     	text := scanner.Text()
     	textSlice := strings.Split(text, "x")
@@ -48,12 +49,20 @@ func main() {
         	log.Fatal(err)
     	}
 
-    	sideA, sideB, sideC := l * w, l * h, w * h
-    	surfaceArea := 2 * sideA + 2 * sideB + 2 * sideC
-    	extraPaper := min(sideA, sideB, sideC)
+        volume := l * w * h
+        perimA, perimB, perimC := 2*l + 2*w, 2*l + 2*h, 2*w + 2*h 
+    	areaA, areaB, areaC := l * w, l * h, w * h 
+    	
+        surfaceArea := 2 * areaA + 2 * areaB + 2 * areaC
+    	extraPaper := min(areaA, areaB, areaC)
     	paper := surfaceArea + extraPaper
 
+        ribbonWrap := min(perimA, perimB, perimC)
+        bow := volume
+        ribbon := ribbonWrap + bow
+
     	totalPaper += paper
+        totalRibbon += ribbon
     }
 
     if err := scanner.Err(); err != nil {
@@ -61,4 +70,5 @@ func main() {
     }
 
     fmt.Printf("[Part 1] Total paper: %d\n", totalPaper)
+    fmt.Printf("[Part 2] Total ribbon: %d\n", totalRibbon)
 }
