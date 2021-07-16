@@ -19,7 +19,11 @@ func main() {
 		fmt.Println(err)
 		return
 	}
+	fmt.Printf("Part 1 answer: %d\n", calculateSingleMode(input))
+	fmt.Printf("Part 2 answer: %d\n", calculateDuoMode(input))
+}
 
+func calculateSingleMode(input []byte) int {
 	currCoord := coord{0, 0}
 	s := map[coord]bool{currCoord: true}
 	for i := 0; i < len(input); i++ {
@@ -35,11 +39,40 @@ func main() {
 			currCoord.y--
 		} else {
 			fmt.Printf("Error: Character '%c'\n", direction);
-			return
+			return -1
 		}
 
 		s[currCoord] = true
 	}
-	fmt.Printf("Part 1 answer: %d\n", len(s))
-	// fmt.Printf("Part 2 answer: %d\n", basement_idx)
+	return len(s)
+}
+
+func calculateDuoMode(input []byte) int {
+	santaCoord, roboCoord := coord{0, 0}, coord{0, 0}
+	s := map[coord]bool{coord{0, 0}: true}
+	for i := 0; i < len(input); i++ {
+		var currCoord *coord
+		if i % 2 == 0 {
+			currCoord = &santaCoord
+		} else {
+			currCoord = &roboCoord
+		}
+
+		direction := input[i]
+		if direction == '>' {
+			currCoord.x++
+		} else if direction == '^' {
+			currCoord.y++
+		} else if direction == '<' {
+			currCoord.x--
+		} else if direction == 'v' {
+			currCoord.y--
+		} else {
+			fmt.Printf("Error: Character '%c'\n", direction);
+			return -1
+		}
+
+		s[*currCoord] = true
+	}
+	return len(s)
 }
