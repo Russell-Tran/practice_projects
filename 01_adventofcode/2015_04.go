@@ -8,6 +8,7 @@ import (
 )
 
 const fiveZeroes = "00000"
+const sixZeroes = "000000"
 
 func main() {
 	input, err := ioutil.ReadFile("2015_04.txt")
@@ -16,7 +17,7 @@ func main() {
 		return
 	}
 	fmt.Printf("Part 1 answer: %d\n", doPartOne(input))
-	//fmt.Printf("Part 2 answer: %d\n", calculateDuoMode(input))
+	fmt.Printf("Part 2 answer: %d\n", doPartTwo(input))
 }
 
 func doPartOne(input []byte) int {
@@ -24,6 +25,17 @@ func doPartOne(input []byte) int {
 		attempt := []byte(string(input) + strconv.Itoa(i))
 		output := fmt.Sprintf("%x", md5.Sum(attempt))
 		if output[:5] == fiveZeroes {
+			return i
+		}
+	}
+	return -1
+}
+
+func doPartTwo(input []byte) int {
+	for i:= 1; i > 0; i++ {
+		attempt := []byte(string(input) + strconv.Itoa(i))
+		output := fmt.Sprintf("%x", md5.Sum(attempt))
+		if output[:6] == sixZeroes {
 			return i
 		}
 	}
