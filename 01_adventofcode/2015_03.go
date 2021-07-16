@@ -48,8 +48,8 @@ func calculateSingleMode(input []byte) int {
 }
 
 func calculateDuoMode(input []byte) int {
-	santaCoord, roboCoord := coord{0, 0}, coord{0, 0}
-	s := map[coord]bool{coord{0, 0}: true}
+	santaCoord, roboCoord := coord{}, coord{}
+	s := map[coord]bool{coord{}: true}
 	for i := 0; i < len(input); i++ {
 		var currCoord *coord
 		if i % 2 == 0 {
