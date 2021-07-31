@@ -1,4 +1,3 @@
-// TODO: debug
 package main
 
 import (
@@ -35,7 +34,9 @@ func doPartOne(file *os.File) int {
     count := 0
     for scanner.Scan() {
         text := scanner.Text()
-        if containsAtLeastNVowels(text, 3) && containsAtLeastOneLetterNTimesInARow(text, 2) && noBadSubstrings(text) {
+        if containsAtLeastNVowels(text, 3) &&
+            containsAtLeastOneLetterNTimesInARow(text, 2) &&
+            noBadSubstrings(text) {
             count++
         }
         
@@ -58,12 +59,12 @@ func containsAtLeastNVowels(s string, n uint) bool {
 
 func containsAtLeastOneLetterNTimesInARow(s string, n uint) bool {
     var prior rune
-    count := uint(0)
+    count := uint(1)
     for i, char := range s {
         if i > 0 && char == prior {
             count++
         } else {
-            count = 0
+            count = 1
         }
         if count >= n {
             return true
