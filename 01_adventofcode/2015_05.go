@@ -1,3 +1,4 @@
+// TODO: part 2
 package main
 
 import (
@@ -44,6 +45,8 @@ func doPartOne(file *os.File) int {
     return count
 }
 
+/* Part 1 helpers */
+
 func containsAtLeastNVowels(s string, n uint) bool {
     count := uint(0)
     for _, char := range s {
@@ -81,4 +84,36 @@ func noBadSubstrings(s string) bool {
         }
     }
     return true
+}
+
+/* Part 2 helpers */ 
+
+func ContainsPairOfLettersTwice(s string) bool {
+    pairs := map[string]int{}
+    for i := 0; i < len(s)-1; i++ {
+        pair := s[i:i+1]
+        if idx, ok := pairs[pair]; ok && idx != i-1 { // nonoverlapping
+            return true
+        } else if ok {
+            continue
+        } else {
+            pairs[pair] = i
+        }    
+    }
+    return false
+}
+
+func ContainsLetterTwice(s string) bool {
+    letters map[rune]int{}
+    for i := 0; i < len(s); i++ {
+        letter := s[i]
+        if idx, ok := letters[letter]; ok && idx != i-1 { // nonadjacent
+            return true
+        } else if ok {
+            continue
+        } else {
+            letters[letter] = i
+        }
+    }
+    return false
 }
