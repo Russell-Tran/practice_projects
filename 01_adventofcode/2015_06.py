@@ -1,7 +1,9 @@
 class Instruction:
 	def __init__(self, line):
 		return
-	def exeute(self, grid):
+	def execute(self, grid):
+		return
+	def executePartTwo(self, grid):
 		return
 
 class TurnInstruction(Instruction):
