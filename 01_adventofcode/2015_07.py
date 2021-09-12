@@ -15,6 +15,8 @@ class Solution:
 		line = line.split()
 		if line[1] == "->":
 			lhs, rhs = line[0], line[2]
+			if self.isPartTwo and rhs == "b":
+				return
 			self.variables[rhs] = self.access(lhs)
 		elif line[0] == "NOT":
 			lhs, rhs = line[1], line[3]
@@ -35,7 +37,6 @@ class Solution:
 			raise Exception("Unknown!")
 
 	def solve(self):
-		self.variables = {}
 		with open("2015_07.txt", 'r') as file:
 			queue = []
 			for line in file:
@@ -51,9 +52,22 @@ class Solution:
 				except KeyError:
 					queue.append(line)
 				
-		print(self.variables["a"])
+		return self.variables["a"]
 
+	def solvePartOne(self):
+		self.variables = {}
+		self.isPartTwo = False
+		return self.solve()
+
+	def solvePartTwo(self, b):
+		self.variables = {"b" : b}
+		self.isPartTwo = True
+		return self.solve()
 				
 if __name__ == "__main__":
-	Solution().solve()
+	partOne = Solution().solvePartOne()
+	partTwo = Solution().solvePartTwo(b=partOne)
+	print(partOne)
+	print(partTwo)
+
 				
